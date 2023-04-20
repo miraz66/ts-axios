@@ -1,0 +1,8 @@
+{
+  "reactSnippets.settings.prettierEnabled": true,
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontFamily": "Cascadia Code",
+  "files.autoSave": "onFocusChange"
+}
