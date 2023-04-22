@@ -1,18 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
-
-export type Crypto = {
-  ath: number;
-  atl: number;
-  current_price: number;
-  id: string;
-  name: string;
-  symbol: string;
-  high_24h: number;
-  low_24: number;
-  image: string;
-};
+import CryptoSummary from "./CryptoSummary";
+import { Crypto } from "./Types/Types";
 
 function App() {
   const [cryptos, setCrytos] = useState<Crypto[] | null>(null);
@@ -31,13 +21,7 @@ function App() {
       <div className="">
         {cryptos
           ? cryptos.map((crypto) => {
-              return (
-                <>
-                  <img src={crypto.image} alt="" />
-                  <p>{crypto.name}</p>
-                  <p>{crypto.ath}</p>
-                </>
-              );
+              return <CryptoSummary crypto={crypto} />;
             })
           : null}
       </div>
