@@ -6,6 +6,7 @@ import { Crypto } from "./Types/Types";
 
 function App() {
   const [cryptos, setCrytos] = useState<Crypto[] | null>(null);
+  const [selected, setSelected] = useState<Crypto | null>();
 
   useEffect(() => {
     const url =
@@ -14,17 +15,32 @@ function App() {
     axios.get(url).then((respons) => {
       setCrytos(respons.data);
     });
-  });
+  }, []);
 
   return (
     <div className="App">
       <div className="">
-        {cryptos
-          ? cryptos.map((crypto) => {
-              return <CryptoSummary crypto={crypto} />;
-            })
-          : null}
+        <select
+          onChange={(e) => {
+            const c = cryptos?.find((x) => x.id === e.target.value);
+            console.log(c);
+            setSelected(c);
+          }}
+          defaultValue="default"
+        >
+          <option value="default">Choose an option</option>
+          {cryptos
+            ? cryptos.map((crypto) => {
+                return (
+                  <option key={crypto.id} value={crypto.id}>
+                    {crypto.name}
+                  </option>
+                );
+              })
+            : null}
+        </select>
       </div>
+      {selected ? <CryptoSummary crypto={selected} /> : null}
     </div>
   );
 }

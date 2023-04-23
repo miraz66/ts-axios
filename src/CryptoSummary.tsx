@@ -5,13 +5,7 @@ export type AppProps = {
 };
 
 function CriptoSummary({ crypto }: AppProps): JSX.Element {
-  return (
-    <>
-      <img src={crypto.image} alt="" />
-      <p>{crypto.name}</p>
-      <p>{crypto.ath}</p>
-    </>
-  );
+  return <>{`${crypto.name} ${crypto.current_price}`}</>;
 }
 
 export default CriptoSummary;
