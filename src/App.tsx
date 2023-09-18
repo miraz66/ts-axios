@@ -32,9 +32,11 @@ ChartJS.register(
 function App() {
   const [cryptos, setCrytos] = useState<Crypto[] | null>(null);
   const [selected, setSelected] = useState<Crypto | null>();
+  const [range, setRange] = useState<string>();
 
   const [pieData, setPieData] = useState<ChartData<"pie">>();
   const [data, setData] = useState<ChartData<"line">>();
+
   const [options, setOpetions] = useState<ChartOptions<"line">>({
     responsive: true,
     plugins: {
@@ -57,9 +59,11 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {}, [selected, range]);
+
   return (
-    <div className="App">
-      <div className="">
+    <>
+      <>
         <select
           onChange={(e) => {
             const c = cryptos?.find((x) => x.id === e.target.value);
@@ -105,6 +109,7 @@ function App() {
               })
             : null}
         </select>
+
         <select
           onChange={(e) => {
             console.log(e.target.value);
@@ -112,13 +117,15 @@ function App() {
           defaultValue="defaultDays"
         >
           <option value="defaultDays">Days</option>
-          <option value="">30 days</option>
-          <option value="">15 days</option>
-          <option value="">7 days</option>
-          <option value="">1 days</option>
+          <option value="30">30 days</option>
+          <option value="15">15 days</option>
+          <option value="7">7 days</option>
+          <option value="1">1 days</option>
         </select>
-      </div>
+      </>
+
       <br />
+
       {selected ? <CryptoSummary crypto={selected} /> : null}
       {data ? (
         <div style={{ width: 900, height: 700 }}>
@@ -126,7 +133,7 @@ function App() {
         </div>
       ) : null}
       {pieData ? <PieChart pieData={pieData} /> : null}
-    </div>
+    </>
   );
 }
 
