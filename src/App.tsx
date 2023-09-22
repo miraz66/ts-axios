@@ -73,6 +73,8 @@ function App() {
               `https://api.coingecko.com/api/v3/coins/${c?.id}/market_chart?vs_currency=usd&days=1&interval=days`
             ).then((response) => {
               console.log(response.data);
+
+              // ----line Chart----
               setData({
                 labels: response.data.prices.map((price: number[]) => {
                   return moment.unix(price[0] / 1000).format("MM-DD");
@@ -89,6 +91,7 @@ function App() {
                 ],
               });
 
+              // ----Pie Chart----
               setPieData(
                 response.data.prices.map((price: number[]) => {
                   return price[1];
@@ -127,11 +130,15 @@ function App() {
       <br />
 
       {selected ? <CryptoSummary crypto={selected} /> : null}
+
+      {/* ----line Chart---- */}
       {data ? (
         <div style={{ width: 900, height: 700 }}>
           <Line options={options} data={data} />
         </div>
       ) : null}
+
+      {/* ----Pie Chart---- */}
       {pieData ? <PieChart pieData={pieData} /> : null}
     </>
   );
