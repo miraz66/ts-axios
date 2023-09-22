@@ -32,24 +32,12 @@ ChartJS.register(
 function App() {
   const [cryptos, setCrytos] = useState<Crypto[] | null>(null);
   const [selected, setSelected] = useState<Crypto | null>();
-  const [range, setRange] = useState<string>();
-  const [day, setDay] = useState<string>();
+  const [range, setRange] = useState<number>();
 
   const [pieData, setPieData] = useState<ChartData<"pie">>();
   const [data, setData] = useState<ChartData<"line">>();
 
-  const [options, setOpetions] = useState<ChartOptions<"line">>({
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const,
-      },
-      title: {
-        display: true,
-        text: "Chart.js Line Chart",
-      },
-    },
-  });
+  const [options, setOpetions] = useState<ChartOptions<"line">>();
 
   useEffect(() => {
     const url =
@@ -60,7 +48,53 @@ function App() {
     });
   }, []);
 
-  useEffect(() => {}, [selected, range]);
+  useEffect(() => {
+    if (!selected) return;
+
+    axios(
+      `https://api.coingecko.com/api/v3/coins/${selected?.id}/market_chart?vs_currency=usd&days=${range}&interval=daily&precision=3`
+    ).then((response) => {
+      console.log(response.data);
+
+      // ----line Chart----
+      setData({
+        labels: response.data.prices.map((price: number[]) => {
+          return moment.unix(price[0] / 1000).format("MM-DD");
+        }),
+        datasets: [
+          {
+            label: "Dataset 1",
+            data: response.data.prices.map((price: number[]) => {
+              return price[1];
+            }),
+            borderColor: "rgb(255, 99, 132)",
+            backgroundColor: "rgba(255, 99, 132, 0.5)",
+          },
+        ],
+      });
+
+      // ----Pie Chart----
+      setPieData(
+        response.data.prices.map((price: number[]) => {
+          return price[1];
+        })
+      );
+
+      // ----Set Options----
+      setOpetions({
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "top" as const,
+          },
+          title: {
+            display: true,
+            text: `Price over last ` + range + `day(s)`,
+          },
+        },
+      });
+    });
+  }, [selected, range]);
 
   return (
     <>
@@ -69,36 +103,6 @@ function App() {
           onChange={(e) => {
             const c = cryptos?.find((x) => x.id === e.target.value);
             setSelected(c);
-
-            axios(
-              `https://api.coingecko.com/api/v3/coins/${c?.id}/market_chart?vs_currency=usd&days=30&interval=daily&precision=12`
-            ).then((response) => {
-              console.log(response.data);
-
-              // ----line Chart----
-              setData({
-                labels: response.data.prices.map((price: number[]) => {
-                  return moment.unix(price[0] / 1000).format("MM-DD");
-                }),
-                datasets: [
-                  {
-                    label: "Dataset 1",
-                    data: response.data.prices.map((price: number[]) => {
-                      return price[1];
-                    }),
-                    borderColor: "rgb(255, 99, 132)",
-                    backgroundColor: "rgba(255, 99, 132, 0.5)",
-                  },
-                ],
-              });
-
-              // ----Pie Chart----
-              setPieData(
-                response.data.prices.map((price: number[]) => {
-                  return price[1];
-                })
-              );
-            });
           }}
           defaultValue="default"
         >
@@ -117,15 +121,15 @@ function App() {
         <select
           onChange={(e) => {
             console.log(e.target.value);
-            setDay(e.target.value);
+            setRange(parseInt(e.target.value));
           }}
-          defaultValue="defaultDays"
+          defaultValue="default"
         >
-          <option value="defaultDays">Days</option>
-          <option value="30">30 days</option>
-          <option value="15">15 days</option>
-          <option value="7">7 days</option>
-          <option value="1">1 days</option>
+          <option value="default">Days</option>
+          <option value={30}>30 days</option>
+          <option value={15}>15 days</option>
+          <option value={7}>7 days</option>
+          <option value={1}>1 days</option>
         </select>
       </>
 
