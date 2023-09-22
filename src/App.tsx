@@ -33,6 +33,7 @@ function App() {
   const [cryptos, setCrytos] = useState<Crypto[] | null>(null);
   const [selected, setSelected] = useState<Crypto | null>();
   const [range, setRange] = useState<string>();
+  const [day, setDay] = useState<string>();
 
   const [pieData, setPieData] = useState<ChartData<"pie">>();
   const [data, setData] = useState<ChartData<"line">>();
@@ -70,7 +71,7 @@ function App() {
             setSelected(c);
 
             axios(
-              `https://api.coingecko.com/api/v3/coins/${c?.id}/market_chart?vs_currency=usd&days=1&interval=days`
+              `https://api.coingecko.com/api/v3/coins/${c?.id}/market_chart?vs_currency=usd&days=30&interval=daily&precision=12`
             ).then((response) => {
               console.log(response.data);
 
@@ -116,6 +117,7 @@ function App() {
         <select
           onChange={(e) => {
             console.log(e.target.value);
+            setDay(e.target.value);
           }}
           defaultValue="defaultDays"
         >
