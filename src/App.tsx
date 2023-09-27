@@ -31,13 +31,12 @@ ChartJS.register(
 
 function App() {
   const [cryptos, setCrytos] = useState<Crypto[] | null>(null);
-  const [selected, setSelected] = useState<Crypto | null>();
+  const [selected, setSelected] = useState<Crypto[]>([]);
   const [range, setRange] = useState<number>();
 
-  const [pieData, setPieData] = useState<ChartData<"pie">>();
+  /*const [pieData, setPieData] = useState<ChartData<"pie">>();
   const [data, setData] = useState<ChartData<"line">>();
-
-  const [options, setOpetions] = useState<ChartOptions<"line">>();
+  const [options, setOpetions] = useState<ChartOptions<"line">>();*/
 
   useEffect(() => {
     const url =
@@ -48,7 +47,7 @@ function App() {
     });
   }, []);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (!selected) return;
 
     axios(
@@ -94,15 +93,15 @@ function App() {
         },
       });
     });
-  }, [selected, range]);
+  }, [selected, range]);*/
 
   return (
     <>
       <>
         <select
           onChange={(e) => {
-            const c = cryptos?.find((x) => x.id === e.target.value);
-            setSelected(c);
+            const c = cryptos?.find((x) => x.id === e.target.value) as Crypto;
+            setSelected([...selected, c]);
           }}
           defaultValue="default"
         >
@@ -118,7 +117,8 @@ function App() {
             : null}
         </select>
 
-        <select
+        <br />
+        {/* <select
           onChange={(e) => {
             console.log(e.target.value);
             setRange(parseInt(e.target.value));
@@ -130,22 +130,24 @@ function App() {
           <option value={15}>15 days</option>
           <option value={7}>7 days</option>
           <option value={1}>1 days</option>
-        </select>
+        </select> */}
       </>
 
-      <br />
+      {selected.map((s) => {
+        return <CryptoSummary crypto={s} />;
+      })}
 
-      {selected ? <CryptoSummary crypto={selected} /> : null}
+      {/*selected ? <CryptoSummary crypto={selected} /> : null*/}
 
       {/* ----line Chart---- */}
-      {data ? (
+      {/*data ? (
         <div style={{ width: 900, height: 700 }}>
           <Line options={options} data={data} />
         </div>
-      ) : null}
+      ) : null*/}
 
       {/* ----Pie Chart---- */}
-      {pieData ? <PieChart pieData={pieData} /> : null}
+      {/*pieData ? <PieChart pieData={pieData} /> : null*/}
     </>
   );
 }
