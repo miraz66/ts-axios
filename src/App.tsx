@@ -32,7 +32,7 @@ ChartJS.register(
 function App() {
   const [cryptos, setCrytos] = useState<Crypto[] | null>(null);
   const [selected, setSelected] = useState<Crypto[]>([]);
-  const [range, setRange] = useState<number>();
+  // const [range, setRange] = useState<number>();
 
   /*const [pieData, setPieData] = useState<ChartData<"pie">>();
   const [data, setData] = useState<ChartData<"line">>();
@@ -96,7 +96,7 @@ function App() {
   }, [selected, range]);*/
 
   return (
-    <>
+    <div className="m-20">
       <>
         <select
           onChange={(e) => {
@@ -148,7 +148,7 @@ function App() {
 
       {/* ----Pie Chart---- */}
       {/*pieData ? <PieChart pieData={pieData} /> : null*/}
-    </>
+    </div>
   );
 }
 

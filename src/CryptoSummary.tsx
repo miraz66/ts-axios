@@ -6,10 +6,10 @@ export type AppProps = {
 };
 
 function CriptoSummary({ crypto }: AppProps): JSX.Element {
-  const [amount, setAmount] = useState<string>("0");
+  const [amount, setAmount] = useState<number>(0);
 
   useEffect(() =>
-    console.log(crypto.name, amount, crypto.current_price * parseInt(amount))
+    console.log(crypto.name, amount, crypto.current_price * amount)
   );
 
   return (
@@ -19,14 +19,16 @@ function CriptoSummary({ crypto }: AppProps): JSX.Element {
         type="number"
         className="border"
         value={amount}
-        onChange={(e) => setAmount(e.target.value)}
+        onChange={(e) => setAmount(parseFloat(e.target.value))}
       />
       <p>
         $
-        {(crypto.current_price * parseFloat(amount)).toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}
+        {amount
+          ? (crypto.current_price * amount).toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          : "0.00"}
       </p>
     </div>
   );
