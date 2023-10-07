@@ -7,7 +7,7 @@ export type AppProps = {
 };
 
 function CriptoSummary({ crypto, updateOwned }: AppProps): JSX.Element {
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number>(NaN);
 
   useEffect(() =>
     console.log(crypto.name, amount, crypto.current_price * amount)
@@ -15,7 +15,7 @@ function CriptoSummary({ crypto, updateOwned }: AppProps): JSX.Element {
 
   return (
     <div className="py-4">
-      <p>{`${crypto.name} ${crypto.current_price}`}</p>
+      <p>{`${crypto.name} price:  ${crypto.current_price}`}</p>
       <input
         type="number"
         className="border"
@@ -26,7 +26,7 @@ function CriptoSummary({ crypto, updateOwned }: AppProps): JSX.Element {
         }}
       />
       <p>
-        New price: $
+        New value: $
         {amount
           ? (crypto.current_price * amount).toLocaleString(undefined, {
               minimumFractionDigits: 2,

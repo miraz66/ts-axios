@@ -35,8 +35,8 @@ function App() {
   const [selected, setSelected] = useState<Crypto[]>([]);
   // const [range, setRange] = useState<number>();
 
-  /*const [pieData, setPieData] = useState<ChartData<"pie">>();
-  const [data, setData] = useState<ChartData<"line">>();
+  const [pieData, setPieData] = useState<ChartData<"pie">>();
+  /*const [data, setData] = useState<ChartData<"line">>();
   const [options, setOpetions] = useState<ChartOptions<"line">>();*/
 
   useEffect(() => {
@@ -149,25 +149,20 @@ function App() {
           <option value={1}>1 days</option>
         </select> */}
       </>
-
       {selected.map((s) => {
         return <CryptoSummary crypto={s} updateOwned={updateOwned} />;
       })}
-
       {/*selected ? <CryptoSummary crypto={selected} /> : null*/}
-
       {/* ----line Chart---- */}
       {/*data ? (
         <div style={{ width: 900, height: 700 }}>
           <Line options={options} data={data} />
         </div>
       ) : null*/}
-
       {/* ----Pie Chart---- */}
-      {/*pieData ? <PieChart pieData={pieData} /> : null*/}
-
+      pieData ? <PieChart pieData={pieData} /> : null
       <p>
-        Total price: $
+        Total fortfolio Value: $
         {selected
           ? selected
               .map((s) => {
