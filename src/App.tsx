@@ -103,6 +103,7 @@ function App() {
 
     console.log("updateOwned", crypto, amount);
     console.log("updateOwned", crypto, amount);
+    console.log("updateOwned", crypto, amount);
   }
 
   return (
