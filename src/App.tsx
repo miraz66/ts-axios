@@ -101,6 +101,10 @@ function App() {
       item.id = crypto.id;
     });
 
+    if (tempObj) {
+      tempObj.owned = amount;
+    }
+
     console.log("updateOwned", crypto, amount);
   }
 
