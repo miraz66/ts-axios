@@ -18,6 +18,7 @@ import {
 } from "chart.js";
 import PieChart from "./Types/ChartJs/PieChart";
 import moment from "moment";
+import { log } from "console";
 
 ChartJS.register(
   CategoryScale,
@@ -94,6 +95,10 @@ function App() {
       });
     });
   }, [selected, range]);*/
+
+  useEffect(() => {
+    console.log("SELECTED", selected);
+  }, [selected]);
 
   function updateOwned(crypto: Crypto, amount: number): void {
     let temp = [...selected];
