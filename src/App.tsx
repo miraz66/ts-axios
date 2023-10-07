@@ -165,6 +165,28 @@ function App() {
 
       {/* ----Pie Chart---- */}
       {/*pieData ? <PieChart pieData={pieData} /> : null*/}
+
+      <p>
+        Total price: $
+        {selected
+          ? selected
+              .map((s) => {
+                if (isNaN(s.owned)) {
+                  return 0;
+                }
+
+                return s.current_price * s.owned;
+              })
+              .reduce((prev, current) => {
+                console.log("prev", prev, "current", current);
+                return prev + current;
+              }, 0)
+              .toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })
+          : null}
+      </p>
     </div>
   );
 }

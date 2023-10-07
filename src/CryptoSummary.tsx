@@ -26,7 +26,7 @@ function CriptoSummary({ crypto, updateOwned }: AppProps): JSX.Element {
         }}
       />
       <p>
-        $
+        New price: $
         {amount
           ? (crypto.current_price * amount).toLocaleString(undefined, {
               minimumFractionDigits: 2,
