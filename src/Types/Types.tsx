@@ -8,4 +8,5 @@ export type Crypto = {
   high_24h: number;
   low_24: number;
   image: string;
+  owned: number;
 };
