@@ -96,6 +96,8 @@ function App() {
   }, [selected, range]);*/
 
   function updateOwned(crypto: Crypto, amount: number): void {
+    console.log(selected);
+
     console.log("updateOwned", crypto, amount);
   }
 
