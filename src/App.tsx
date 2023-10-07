@@ -97,6 +97,7 @@ function App() {
 
   function updateOwned(crypto: Crypto, amount: number): void {
     let temp = [...selected];
+    temp.find((item) => {}
 
     console.log("updateOwned", crypto, amount);
   }
