@@ -3,9 +3,10 @@ import { Crypto } from "./Types/Types";
 
 export type AppProps = {
   crypto: Crypto;
+  updateOwned: (crypto: Crypto, amount: number) => void;
 };
 
-function CriptoSummary({ crypto }: AppProps): JSX.Element {
+function CriptoSummary({ crypto, updateOwned }: AppProps): JSX.Element {
   const [amount, setAmount] = useState<number>(0);
 
   useEffect(() =>
@@ -19,7 +20,10 @@ function CriptoSummary({ crypto }: AppProps): JSX.Element {
         type="number"
         className="border"
         value={amount}
-        onChange={(e) => setAmount(parseFloat(e.target.value))}
+        onChange={(e) => {
+          setAmount(parseFloat(e.target.value));
+          updateOwned(crypto, parseFloat(e.target.value));
+        }}
       />
       <p>
         $
