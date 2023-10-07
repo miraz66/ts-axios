@@ -3,9 +3,9 @@ import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function PieChart({ pieData }) {
+function PieChart({ pieData, name }) {
   const data = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    labels: name,
     datasets: [
       {
         label: "# of Votes",

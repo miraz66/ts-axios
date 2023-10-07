@@ -36,6 +36,8 @@ function App() {
   // const [range, setRange] = useState<number>();
 
   const [pieData, setPieData] = useState<ChartData<"pie">>();
+  const [payName, setPayName] = useState<string>();
+
   /*const [data, setData] = useState<ChartData<"line">>();
   const [options, setOpetions] = useState<ChartOptions<"line">>();*/
 
@@ -97,7 +99,11 @@ function App() {
   }, [selected, range]);*/
 
   useEffect(() => {
-    console.log("SELECTED", selected);
+    const data = selected.map((num) => num.owned);
+    const name = selected.map((num) => num.name);
+
+    // setPieData(data);
+    setPayName(name);
   }, [selected]);
 
   function updateOwned(crypto: Crypto, amount: number): void {
@@ -160,7 +166,7 @@ function App() {
         </div>
       ) : null*/}
       {/* ----Pie Chart---- */}
-      pieData ? <PieChart pieData={pieData} /> : null
+      {pieData ? <PieChart name={name} pieData={pieData} /> : null}
       <p>
         Total fortfolio Value: $
         {selected
