@@ -102,12 +102,11 @@ function App() {
 
   function updateOwned(crypto: Crypto, amount: number): void {
     let temp = [...selected];
-    let tempObj = temp.find((item) => {
-      item.id = crypto.id;
-    });
+    let tempObj = temp.find((item) => item.id === crypto.id);
 
     if (tempObj) {
       tempObj.owned = amount;
+      setSelected(temp);
     }
 
     console.log("updateOwned", crypto, amount);
