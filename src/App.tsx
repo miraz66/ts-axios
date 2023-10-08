@@ -102,8 +102,8 @@ function App() {
     const data = selected.map((num) => num.owned);
     const name = selected.map((num) => num.name);
 
-    // setPieData(data);
     setPayName(name);
+    setPieData(data);
   }, [selected]);
 
   function updateOwned(crypto: Crypto, amount: number): void {
@@ -166,7 +166,6 @@ function App() {
         </div>
       ) : null*/}
       {/* ----Pie Chart---- */}
-      {pieData ? <PieChart name={name} pieData={pieData} /> : null}
       <p>
         Total fortfolio Value: $
         {selected
@@ -188,6 +187,7 @@ function App() {
               })
           : null}
       </p>
+      {pieData ? <PieChart name={payName} pieData={pieData} /> : null}
     </div>
   );
 }
